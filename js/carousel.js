@@ -7,9 +7,9 @@
  * 
  */
 var i=0;
-var timer,maxI;//timer为定时器，用于轮播内容切换；maxI获取当前轮播的
+var timer;//timer为定时器，用于轮播内容切换；maxI获取当前轮播的
 $(function(){
-	maxI = $('.carousel-img').size();
+	var maxI = $('.carousel-img').size();
 	$(".carousel-img").eq(0).show().siblings().hide();
 	carouselAction();
 
@@ -43,7 +43,7 @@ function show(){
 
 }
 // 图片自动轮播效果
-function carouselAction(){
+function carouselAction(maxI){
 	timer = setInterval(function(){
 		i = i > maxI-2 ? 0 : ++i;
 		show();
