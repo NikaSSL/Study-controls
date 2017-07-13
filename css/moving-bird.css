@@ -1,0 +1,23 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2017-07-12 17:39:36
+ * @version $Id$
+ * @可由键盘操作行动的小鸟
+ * 
+ */
+body{overflow: hidden;}
+#bird{
+	position: absolute;/*想要鸟动的话，需要让包含鸟图片的div脱离文档流*/
+	width: 150px;
+	height: 107.719px;
+}
+#bird img{
+	width: 150px;
+	height: 107.719px;
+}
+.dir_37{tranform: rotate(0deg);}
+.dir_38{transform: rotate(5deg);}
+.dir_39{transform: rotateY(180deg);}
+.dir_40{transform: rotate(-5deg);}
