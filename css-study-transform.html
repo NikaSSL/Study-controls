@@ -2,14 +2,14 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>CSS3——学习transform</title>
+	<title>CSS3——学习2Dtransform</title>
 	<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
 	<style type="text/css">
 		*{margin: 0;padding: 0;}
 		main{
 			margin: 0 auto;
 			width: 100%;
-			margin-top: 100px;
+			margin-top: 50px;
 			text-align: right;
 		}
 		#box{
@@ -23,10 +23,11 @@
 			background-color: red;
 			width: 200px;
 			height: 100px;
-			left: 100px;
+			left: 350px;
 			top: 100px;
 		}
 		label{display: block;}
+		#axes_3d{width: 250px;}
 		#bar{
 			right: 10px;
 			top: 0;
@@ -35,9 +36,12 @@
 			float: left;
 			border-left: 1px solid red;
 		}
+		h1{text-align: center;}
 	</style>
 </head>
 <body>
+	<h1>CSS3——学习2Dtransform</h1>
+	<img id="axes_3d" src="images/3d_axes.png"><span style='color:blue'>注意：y轴的正方向与传统认知里面的坐标轴不同</span>
 	<main>
 		<div id="box">
 			<div id="test"></div>			
@@ -45,12 +49,12 @@
 		<div id="bar">
 			<!-- transform-origin 变换中心 -->
 			<label for="transformOriginXB">
-				transform-origin的x-axis(0%至100%):<span id="transform-OXV">0</span>
-				<input unit="%"  type="range" id="transformOriginXB" min="0" max="100" value="0">
+				transform-origin的x-axis(0%至100%):<span id="transformOriginXV">50%</span>
+				<input unit="%"  type="range" id="transformOriginXB" min="0" max="100" value="50">
 			</label>
 			<label for="transformOriginYB">
-				transform-origin的y-axis(0%至100%):<span id="transform-OYV">0</span>
-				<input unit="%"  type="range" id="transformOriginYB" min="0" max="100" value="0">
+				transform-origin的y-axis(0%至100%):<span id="transformOriginYV">50%</span>
+				<input unit="%"  type="range" id="transformOriginYB" min="0" max="100" value="50">
 			</label>
 <!-- 			<label for="transformOriginZB">
 				transform-origin的z-axis(0%至100%):<span id="transform-OZV">0</span>
@@ -58,37 +62,37 @@
 			</label> -->
 			<!-- translate 移动 -->
 			<label for="translateXB">
-				translateX(范围-100至100):<span id="translateXV">0</span>
+				translateX(范围-100至100):<span id="translateXV">0px</span>
 				<input unit="px" type="range" id="translateXB" min="-100" max="100" value="0">
 			</label>
 			<label for="translateYB">
-				translateY(范围-200至200):<span id="translateYV">0</span>
+				translateY(范围-200至200):<span id="translateYV">0px</span>
 				<input unit="px" type="range" id="translateYB" min="-200" max="200" value="0">			
 			</label>		
 			<!-- rotate 旋转 -->						
 			<label for="rotateB">
-				rotate(范围-360deg至360deg):<span id="rotateV">0</span>	
+				rotate(范围-360deg至360deg):<span id="rotateV">0deg</span>	
 				<input unit="deg" type="range" id="rotateB" min="-360" max="360" value="0">	
 			</label>
 			<!-- scale 缩放 -->
 			<label for="scaleXB">
-				scaleX(范围0到2):<span id="scaleXV">1</span>
-				<input unit="" type="range" id="scaleXB" min="0" max="2" value="1">
+				scaleX(范围0到3<b>仅示例整数</b>):<span id="scaleXV">1</span>
+				<input unit="" type="range" id="scaleXB" min="0" max="3" value="1">
 			</label>
 			<label for="scaleYB">
-				scaleY(范围0到2):<span id="scaleYV">1</span>
-				<input unit="" type="range" id="scaleYB" min="0" max="2" value="1">
+				scaleY(范围0到3<b>仅示例整数</b>):<span id="scaleYV">1</span>
+				<input unit="" type="range" id="scaleYB" min="0" max="3" value="1">
 			</label>
 			<!-- skew 扭曲	 -->
 			<label for="skewXB">
-				skewX(范围-180deg到180deg):<span id="skewXV">0</span>
-				<input unit="deg" type="range" id="skewXB" min="-180" max="180deg" value="0">
+				skewX(范围-100deg到100deg):<span id="skewXV">0deg</span>
+				<input unit="deg" type="range" id="skewXB" min="-100" max="100deg" value="0">
 			</label>
 			<label for="skewYB">
-				skewY(范围-180deg到180deg):<span id="skewYV">0</span>
-				<input unit="deg" type="range" id="skewYB" min="-180" max="180deg" value="0">
+				skewY(范围-100deg到100deg):<span id="skewYV">0deg</span>
+				<input unit="deg" type="range" id="skewYB" min="-100" max="100deg" value="0">
 			</label>				
-		</div>		
+		</div>
 	</main>
 <script type="text/javascript">
 	$(function(){
@@ -105,28 +109,28 @@
 		$('input[type=range]').change(function(){
 			var id = $(this).attr("id");
 			var ID = id.substring(0,id.length-1);//去除尾部的字母B
-			var o,arr;
+			var arr1,arr2,arr3 = '',i,str,val;
+			val = $(this).val() + $(this).attr('unit');
+			$('#'+ID+'V').text(val);//更改对应span的text
 			if(ID.indexOf('transformOrigin') == -1){
-				foo[ID] = $(this).val() + $(this).attr('unit');
+				foo[ID] = val;
 			}else{//当改变的是transform-origin的参数
 				if (ID.indexOf('X') != -1) {
-					transformOrigin[0] = $(this).val() + $(this).attr('unit');
+					transformOrigin[0] = val;
 				}else{
-					transformOrigin[1] = $(this).val() + $(this).attr('unit');
+					transformOrigin[1] = val;
 				}				
 				$('#test').css('transformOrigin',transformOrigin.join(' '));
 			}
-			var str = JSON.stringify(foo);
-			var arr2 = str.substring(1,str.length-1).split(',');
-			var  i,arr3,arr4 = '';
-			for(i in arr2){
-				arr2[i] = arr2[i].replace('/"/g','');//去除双引号[RegExp书写存在问题，希望达到的效果：去除所有双引号]
-				arr3 = arr2[i].split(':');
-				arr3[1] = '(' + arr3[1] + ')';
-				arr4 = (i == arr2.length-1) ? arr4 + arr3.join(':'):arr4 + arr3.join(':') + ' ';
+			str = JSON.stringify(foo);
+			arr1 = str.substring(1,str.length-1).split(',');
+			for(i in arr1){
+				arr1[i] = arr1[i].replace(/"/g,'');
+				arr2 = arr1[i].split(':');
+				arr2[1] = '(' + arr2[1] + ')';
+				arr3 = (i == arr1.length-1) ? arr3 + arr2.join(''):arr3 + arr2.join('') + ' ';
 			}
-			console.log(arr4);
-			$('#test').css('transform',arr4);
+			$('#test').css('transform',arr3);
 		})
 	})
 </script>
