@@ -34,7 +34,6 @@
 			width: 34%;
 			float: left;
 			border-left: 1px solid red;
-			/*width: 430px;*/
 		}
 	</style>
 </head>
@@ -47,11 +46,11 @@
 			<!-- transform-origin 变换中心 -->
 			<label for="transformOriginXB">
 				transform-origin的x-axis(0%至100%):<span id="transform-OXV">0</span>
-				<input  type="range" id="transformOriginXB" min="0" max="100" value="0">
+				<input unit="%"  type="range" id="transformOriginXB" min="0" max="100" value="0">
 			</label>
 			<label for="transformOriginYB">
 				transform-origin的y-axis(0%至100%):<span id="transform-OYV">0</span>
-				<input  type="range" id="transformOriginYB" min="0" max="100" value="0">
+				<input unit="%"  type="range" id="transformOriginYB" min="0" max="100" value="0">
 			</label>
 <!-- 			<label for="transformOriginZB">
 				transform-origin的z-axis(0%至100%):<span id="transform-OZV">0</span>
@@ -93,23 +92,43 @@
 	</main>
 <script type="text/javascript">
 	$(function(){
+		var transformOrigin = ['50%','50%'];
+		var foo = {
+			"translateX": "0px",
+			"translateY": "0px",
+			"rotate": "0deg",
+			"scaleX": "1",
+			"scaleY": "1",
+			"skewX": "0deg",
+			"skewY": "0deg"
+		};
 		$('input[type=range]').change(function(){
 			var id = $(this).attr("id");
-			var ID = id.substring(0,id.length-2);//去除尾部的字母B
-			var flag = false;//是否为transform-origin
-			var ID_pre = ID.substring(0,ID.length-2);
-			var ID_end = ID.charCodeAt(ID.length-1);
-			if(ID.match('transformOrigin')){
-				flag = true;
+			var ID = id.substring(0,id.length-1);//去除尾部的字母B
+			var o,arr;
+			if(ID.indexOf('transformOrigin') == -1){
+				foo[ID] = $(this).val() + $(this).attr('unit');
+			}else{//当改变的是transform-origin的参数
+				if (ID.indexOf('X') != -1) {
+					transformOrigin[0] = $(this).val() + $(this).attr('unit');
+				}else{
+					transformOrigin[1] = $(this).val() + $(this).attr('unit');
+				}				
+				$('#test').css('transformOrigin',transformOrigin.join(' '));
 			}
-			if(flag == false){
-				$(this).attr(ID,$(this).val()+$(this).attr('unit'));
-			}else{
-				this.style.transformOrigin = $('#transformOriginXB').val()+' '+$('#transformOriginYB').val();
+			var str = JSON.stringify(foo);
+			var arr2 = str.substring(1,str.length-1).split(',');
+			var  i,arr3,arr4 = '';
+			for(i in arr2){
+				arr2[i] = arr2[i].replace('/"/g','');//去除双引号[RegExp书写存在问题，希望达到的效果：去除所有双引号]
+				arr3 = arr2[i].split(':');
+				arr3[1] = '(' + arr3[1] + ')';
+				arr4 = (i == arr2.length-1) ? arr4 + arr3.join(':'):arr4 + arr3.join(':') + ' ';
 			}
+			console.log(arr4);
+			$('#test').css('transform',arr4);
 		})
 	})
 </script>
-
 </body>
 </html>
