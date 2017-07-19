@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Three linkage menu</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+    <select id="province">
+    	<option>--请选择--</option>
+    </select>
+    <select id="city">
+    	<option>--请选择--</option>
+    </select>
+    <select id="area">
+    	<option>--请选择--</option>
+    </select>
+    <script type="text/javascript">
+	var arr1 = ['江西省','广东省','湖南省'];
+	var arr2 = [['南昌市','景德镇市','九江'],['广州市','韶关市'],['长沙市','株洲市']];
+	var arr3 = [[['东湖区','青云谱区','西湖区'],['昌江区','浮梁县'],['庐山区','浔阳区','九江县','武宁县']],[['荔湾区','越秀区','海珠区','天河区'],['武江区','浈江区','曲江区','始兴县']],[['芙蓉区','岳麓区','开福区'],['荷塘区','芦淞区']]];    
+	var i,index1,index2;
+    $(function(){
+    	for(i in arr1){
+    		$('#province').append('<option>'+arr1[i]+'</option>');
+    	}
+    	$('#province').change(function(){
+    		$('#city').children().not(':eq(0)').remove();//保留第一个option，即保留请选择这一项
+    		$('#area').children().not(':eq(0)').remove();
+    		index1 = $(this).children('option:selected').index();
+    		var cityArray = arr2[index1-1];
+	    	for(i in cityArray){
+	    		$('#city').append('<option>'+cityArray[i]+'</option>');
+	    	}  		
+    	});
+    	$('#city').change(function(){
+    		$('#area').children().not(':eq(0)').remove();
+    		index2 = $(this).children('option:selected').index();
+    		var areaArray = arr3[index1-1][index2-1];
+    		for(i in areaArray){
+    			$('#area').append('<option>'+areaArray[i]+'</option>');
+    		}
+    	})
+    })
+    </script>    
+</body>
+</html>
