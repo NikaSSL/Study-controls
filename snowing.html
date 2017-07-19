@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>snowing</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<style type="text/css">
+	*{margin: 0;padding: 0;}
+	body{
+		background-color: #000;
+		overflow: hidden;
+	}
+</style>
+</head>
+<body>
+	<main></main>
+	<script type="text/javascript">
+	$(function(){
+		var docWidth = $(document).width();
+		var docHeight = $(document).height();
+		var time = 200;//产生一片雪的时间间隔	
+		var $snowflake = $("<div></div>").css({
+				"position": "absolute",
+				"top": "-45px",
+				"color": "#fff"			
+		}).html("❉");
+		setInterval(function(){
+			var stratPosition = Math.random()*docWidth+"px";//雪片下落前距离浏览器左侧的位置
+			var endPosition = Math.random()*docWidth+"px";//雪片下落后距离浏览器左侧的位置
+			var fontSize = 15+Math.random()*30+"px";//雪片大小
+			var op =  0.7+Math.random()*0.3;//雪片的透明度
+			var speed = 6000+Math.random()*1000;//雪片下落时间		
+			$snowflake.clone().appendTo('body').css({
+				"font-size": fontSize,
+				"left": stratPosition,
+				"opacity": op,
+			}).animate({
+				"left": endPosition,
+				"opacity": .5,
+				"top": docHeight,
+			},speed,function(){
+				$(this).remove();
+			})},time);
+	})
+	</script>
+</body>
+</html>
