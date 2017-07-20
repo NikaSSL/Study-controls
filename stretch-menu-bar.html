@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Stretch menu bar</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<style type="text/css">
+*{margin: 0;padding: 0;}
+body{background-color: rgb(249,220,226);font-size: 18px;color: #fff;}
+a{text-decoration: none;}
+ul{list-style-type: none;}
+.list{margin-bottom: 1px;}
+.list,.list ul{width: 200px;}
+.list > a{
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+	background-color: rgb(193,15,49);
+	border-left: 15px solid rgb(113,18,17);
+}
+.list ul a{
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	color: #fff;
+	background-color: rgb(233,79,114);
+	border-left: 30px solid rgb(161,28,26);
+	margin-bottom: 1px;
+}
+a:hover,.list ul a:hover{color: rgb(233,211,73);}
+</style>
+<body>
+    <ul>
+    	<li class="list">
+    		<a class="s" href='javascript:;'>体育明星</a>
+    		<ul class="ulitem">
+	    		<li><a href="javascript:;">乔丹</a></li>
+	    		<li><a href="javascript:;">纳什</a></li>
+	    		<li><a href="javascript:;">奥尼尔</a></li>    			
+    		</ul>
+    	</li>
+    	<li class="list">
+    		<a class="s" href='javascript:;'>政治明星</a>
+    		<ul class="ulitem">
+	    		<li><a href="javascript:;">普金</a></li>
+	    		<li><a href="javascript:;">习大大</a></li>
+	    		<li><a href="javascript:;">奥巴马</a></li>    			
+    		</ul>
+    	</li>
+    	<li class="list">
+    		<a class="s" href='javascript:;'>娱乐明星</a>
+    		<ul class="ulitem">
+	    		<li><a href="javascript:;">黄家驹</a></li>
+	    		<li><a href="javascript:;">刘德华</a></li>
+	    		<li><a href="javascript:;">周润发</a></li>    			
+    		</ul>
+    	</li>
+    </ul>
+</body>
+<script type="text/javascript">
+	$(function(){
+		// $('.ulitem').hide();
+		// $('.list>a').toggle(function(){
+		// 	$(this).next().css('width','100px');
+		// },function(){
+		// 	$(this).next().css('width','300px');
+		// });//效果描述：xx明星的a链接逐渐消失，完全消失时ulitem里面的li标签宽度变为300px
+		// $('.list>a').toggle(function(){$(this).next().slideDown();},function(){$(this).next().slideUp();});//为何呀？版本问题，高版本的用法变了？
+		$('.list>a').click(function(){
+			$('.ulitem').slideUp();
+			$(this).next().slideToggle();
+		})
+	})
+</script>
+</html>
