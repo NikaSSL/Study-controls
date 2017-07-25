@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb18030">
+    <title>Untitled Document</title>
+    
+</head>
+<body>
+    <script type="text/javascript">   
+        /*
+         * param1 Array 
+         * param2 Array
+         * return true or false
+         */
+        function type(a){
+            return  a === null ? '[object Null]':Object.prototype.toString.apply(a); //hack ie678
+        }
+        function arraysSimilar(arr1, arr2){
+            if(!Array.isArray(arr1) || !Array.isArray(arr2) ||arr1.length!=arr2.length){return false;}
+            var arr3=[];
+            var arr4=[];
+            for(var i in arr1){
+                arr3.push(type(arr1[i]));
+                arr4.push(type(arr2[i]));
+            }
+            if(arr3.sort().toString()==arr4.sort().toString()){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    </script>
+    <script src="testData.js"></script>
+</body>
+</html>
